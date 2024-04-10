@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GoFast Shop</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<input hidden name="useless_csrf_token" value="ACS_KEYSIGHT_CTF{notaflag}"/>
+<div class="container box">
+    <h1>Hello Our Precious Customers!</h1>
+    {{ if .ShowFlag }}
+    <div class="alert alert-success">
+        Congratulations! Here is your flag: ACS_KEYSIGHT_CTF{run_forr3st_run}
+    </div>
+    {{ end }}
+
+    <div class="alert alert-primary">You have {{ .Balance }} bucks</div>
+    <h3>Faster's Shop Produce</h3>
+    <label>Super fresh!</label>
+    <table class="table" style="background: #eee">
+        <thead>
+            {{ range .Products }}
+            <tr>
+                <td>{{ .ID }}</td>
+                <td>{{ .Name }}</td>
+                <td>{{ .Price }}</td>
+                <td>
+                    <form action="/buy" method="post">
+                        <input type="hidden" name="product_id" value="{{ .ID }}" />
+                        <input type="submit" class="btn btn-primary btn-sm" value="Buy" />
+                    </form>
+                </td>
+            </tr>
+            {{ end }}
+        </tbody>
+    </table>
+    <h3>Purchase History</h3>
+    <label>Tank you!</label>
+    <table class="table" style="background: #eee">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Amount Paid ($)</th>
+            <th scope="col">Purchase Date</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+            {{ range .PurchaseLog }}
+            <tr>
+                <td>{{ .ProductID }}</td>
+                <td>{{ .ProductName }}</td>
+                <td>{{ .PaidAmount }}</td>
+                <td>{{ .VDate }}</td>
+                <td>
+                    <form action="/sell" method="post">
+                        <input type="hidden" name="purchase_id" value="{{ .ID }}" />
+                        <input type="submit" class="btn btn-primary btn-sm" value="Sell" />
+                    </form>
+                </td>
+            </tr>
+            {{ end }}
+            </tbody>            
+    </table>
+</div>
+</body>
+
+<style>
+    .box{
+        margin-top: 100px;
+        max-width: 800px;
+    }
+</style>
+</html>
